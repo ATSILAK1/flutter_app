@@ -66,15 +66,6 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: TextInputField(
-                      controller: _songController,
-                      labelText: 'Song Name',
-                      icon: Icons.music_note,
-                    ),
-                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -90,18 +81,15 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
+                  IconButton(
                       onPressed: () => uploadVideoController.uploadVideo(
                           _songController.text,
                           _captionController.text,
                           widget.videoPath),
-                      child: const Text(
-                        'Share!',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ))
+                      icon: Image.asset('assets/img/AddVideoButton.png',),
+                      
+                      
+                      )
                 ],
               ),
             )

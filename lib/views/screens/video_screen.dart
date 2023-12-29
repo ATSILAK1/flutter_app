@@ -1,16 +1,33 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, sort_child_properties_last
+
+
+
 import 'package:flutter/material.dart';
-import 'package:tiktok_tutorial/constants.dart';
+//import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/controllers/video_controller.dart';
 import 'package:tiktok_tutorial/views/screens/comment_screen.dart';
-import 'package:tiktok_tutorial/views/widgets/circle_animation.dart';
+import 'package:tiktok_tutorial/views/widgets/comment_Widget.dart';
+//import 'package:tiktok_tutorial/views/widgets/circle_animation.dart';
 import 'package:tiktok_tutorial/views/widgets/video_player_iten.dart';
-import 'package:video_player/video_player.dart';
+//import 'package:video_player/video_player.dart';
 import 'package:get/get.dart';
+//import 'package:tiktok_tutorial/views/widgets/my_flutter_app_icons.dart';
 
-class VideoScreen extends StatelessWidget {
+class VideoScreen extends StatefulWidget {
   VideoScreen({Key? key}) : super(key: key);
+  
+  @override
+  State<StatefulWidget> createState() =>_VideoScreenState();
+    
+}
 
+
+class _VideoScreenState extends State<VideoScreen> {
+  
   final VideoController videoController = Get.put(VideoController());
+  bool isVisible = false ;
+
+
 
   buildProfile(String profilePhoto) {
     return SizedBox(
@@ -73,8 +90,12 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    
+    
+    
 
     return Scaffold(
+
       body: Obx(() {
         return PageView.builder(
           itemCount: videoController.videoList.length,
@@ -84,9 +105,14 @@ class VideoScreen extends StatelessWidget {
             final data = videoController.videoList[index];
             return Stack(
               children: [
+                
                 VideoPlayerItem(
                   videoUrl: data.videoUrl,
+
                 ),
+                Container(child: CommentScreen(id: data.id,), )
+                ,
+                const Positioned(child: Text("for you ",style: TextStyle(color: Colors.blue , fontSize: 30)) ,),
                 Column(
                   children: [
                     const SizedBox(
@@ -108,6 +134,14 @@ class VideoScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
+                                  // ignore: prefer_const_constructors
+                                  Row(children: [
+                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                  Icon(Icons.star_rate_sharp , color: Colors.amber)],)
+                                  ,
                                   Text(
                                     data.username,
                                     style: const TextStyle(
@@ -123,60 +157,66 @@ class VideoScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.music_note,
-                                        size: 15,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        data.songName,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  )
+                                  // Row(
+                                  //   children: [
+                                  //     const Icon(
+                                  //       Icons.music_note,
+                                  //       size: 15,
+                                  //       color: Colors.white,
+                                  //     ),
+                                  //     Text(
+                                  //       data.songName,
+                                  //       style: const TextStyle(
+                                  //         fontSize: 15,
+                                  //         color: Colors.white,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // )
                                 ],
                               ),
                             ),
                           ),
                           Container(
                             width: 100,
-                            margin: EdgeInsets.only(top: size.height / 5),
+                            margin: EdgeInsets.only(top: size.height / 5 ,bottom: 50),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              
                               children: [
-                                buildProfile(
+                              /*  buildProfile(
                                   data.profilePhoto,
-                                ),
+                                ), */
                                 Column(
                                   children: [
-                                    InkWell(
-                                      onTap: () =>
-                                          videoController.likeVideo(data.id),
-                                      child: Icon(
-                                        Icons.favorite,
-                                        size: 40,
-                                        color: data.likes.contains(
-                                                authController.user.uid)
-                                            ? Colors.red
-                                            : Colors.white,
-                                      ),
-                                    ),
+                                  GestureDetector(
+                                    child: Image.asset("assets/img/ThumbUp.png"),
+                                    onTap: () =>
+                                          videoController.likeVideo(data.id) ,
+                                  ),
                                     const SizedBox(height: 7),
-                                    Text(
-                                      data.likes.length.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                      ),
-                                    )
+                                    
+                                     // ignore: sort_child_properties_last
+                                     if(data.dislike.length + data.likes.length != 0)
+                                     Row(children: [
+                                      Container(height: 10,width : (data.likes.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(0, 255, 117, 1)),
+
+                                      Container(height: 10,width: (data.dislike.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(241, 16, 16, 1))
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.center,),
                                   ],
                                 ),
+                                Column(
+                                  children: [InkWell(
+                                      onTap: () =>
+                                          videoController.dislikeVideo(data.id),
+                                      child: Image.asset("assets/img/ThumbDown.png"),
+                                    ),
+                                   
+                                    ],
+                                ),
+                                SizedBox( height:1),
                                 Column(
                                   children: [
                                     InkWell(
@@ -184,59 +224,52 @@ class VideoScreen extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) => CommentScreen(
                                             id: data.id,
+                                            
                                           ),
                                         ),
                                       ),
-                                      child: const Icon(
-                                        Icons.comment,
-                                        size: 40,
-                                        color: Colors.white,
-                                      ),
+                                      child: Image.asset("assets/img/Exclamation.png"),
                                     ),
                                     const SizedBox(height: 7),
-                                    Text(
-                                      data.commentCount.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                      ),
-                                    )
+                                   
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      child: const Icon(
-                                        Icons.reply,
-                                        size: 40,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 7),
-                                    Text(
-                                      data.shareCount.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                      ),
-                                    )
+                                    
+                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/Share.png")),visible: isVisible ),
+                                   SizedBox(height:7,),
+                                   Visibility(child: GestureDetector(child: Image.asset('assets/img/save.png')),visible: isVisible),
+                                   SizedBox(height:7,),
+                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/flower.png")),visible: isVisible),
+                                   SizedBox(height:7,),
+                                   
+                                   GestureDetector(child: Image.asset("assets/img/menu.png") ,
+                                   onTap: () { setState(() {
+                                     isVisible = !isVisible;
+                                   });  }
+                                                                     
+                                    
+                                   ,)
+                                   
                                   ],
                                 ),
-                                CircleAnimation(
-                                  child: buildMusicAlbum(data.profilePhoto),
-                                ),
+                               
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
+                    
                   ],
                 ),
               ],
+              
             );
+           
           },
+          
         );
       }),
     );

@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int pageIdx = 0;
+  double buttonScales = 0.8;
 
   @override
   Widget build(BuildContext context) {
@@ -23,29 +24,35 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         type: BottomNavigationBarType.fixed,
         backgroundColor: backgroundColor,
-        selectedItemColor: Colors.red,
+        selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.white,
         currentIndex: pageIdx,
-        items: const [
+        
+        
+
+        items:  [
+          
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: 30),
-            label: 'Home',
+            
+            icon:  Image.asset("assets/img/Home1.png" ,scale: pageIdx == 0 ? buttonScales:1,),
+            label: '',
+
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, size: 30),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: CustomIcon(),
+            icon: Image.asset("assets/img/Search.png", scale: pageIdx == 1 ? buttonScales:1),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 30),
-            label: 'Messages',
+            icon: Image.asset("assets/img/Add.png",scale: pageIdx == 2 ? buttonScales:1),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 30),
-            label: 'Profile',
+            icon: Image.asset("assets/img/Message.png",scale: pageIdx == 3 ? buttonScales:1),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset("assets/img/Profile.png",scale: pageIdx == 4 ? buttonScales:1),
+            label: '',
           ),
         ],
       ),

@@ -17,7 +17,7 @@ List pages = [
 ];
 
 // COLORS
-const backgroundColor = Colors.black;
+const backgroundColor = Color.fromARGB(255, 0, 0, 0);
 var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
 

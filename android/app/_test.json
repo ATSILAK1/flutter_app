@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "83063991908",
+    "project_id": "flutter-794eb",
+    "storage_bucket": "flutter-794eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83063991908:android:3d3bfda9c1906b4c94b971",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_tutorial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_DD4R4Vlwz1I6NBQIzQC0L2yThRjHmd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

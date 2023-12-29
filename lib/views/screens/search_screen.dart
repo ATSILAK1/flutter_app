@@ -14,11 +14,11 @@ class SearchScreen extends StatelessWidget {
     return Obx(() {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red,
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           title: TextFormField(
             decoration: const InputDecoration(
               filled: false,
-              hintText: 'Search',
+              hintText: 'Search for user',
               hintStyle: TextStyle(
                 fontSize: 18,
                 color: Colors.white,
@@ -35,7 +35,9 @@ class SearchScreen extends StatelessWidget {
                     fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
+                    
                   ),
+                  
                 ),
               )
             : ListView.builder(
@@ -49,11 +51,7 @@ class SearchScreen extends StatelessWidget {
                       ),
                     ),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          user.profilePhoto,
-                        ),
-                      ),
+                      
                       title: Text(
                         user.name,
                         style: const TextStyle(
