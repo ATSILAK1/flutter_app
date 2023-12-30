@@ -110,7 +110,7 @@ class _VideoScreenState extends State<VideoScreen> {
                   videoUrl: data.videoUrl,
 
                 ),
-                Container(child: CommentScreen(id: data.id,), )
+                Align(child: CommentScreen(id: data.id,),alignment:Alignment.bottomCenter , )
                 ,
                 const Positioned(child: Text("for you ",style: TextStyle(color: Colors.blue , fontSize: 30)) ,),
                 Column(
@@ -179,47 +179,42 @@ class _VideoScreenState extends State<VideoScreen> {
                             ),
                           ),
                           Container(
+                            
                             width: 100,
-                            margin: EdgeInsets.only(top: size.height / 5 ,bottom: 50),
+                            margin: EdgeInsets.only(top: 0,bottom: 20),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               
                               children: [
                               /*  buildProfile(
                                   data.profilePhoto,
                                 ), */
-                                Column(
+                               Column(
                                   children: [
+                                
                                   GestureDetector(
                                     child: Image.asset("assets/img/ThumbUp.png"),
                                     onTap: () =>
                                           videoController.likeVideo(data.id) ,
                                   ),
-                                    const SizedBox(height: 7),
+                                    const SizedBox(height: 10),
                                     
                                      // ignore: sort_child_properties_last
                                      if(data.dislike.length + data.likes.length != 0)
                                      Row(children: [
                                       Container(height: 10,width : (data.likes.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(0, 255, 117, 1)),
-
+                          
                                       Container(height: 10,width: (data.dislike.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(241, 16, 16, 1))
                                     ],
                                     mainAxisAlignment: MainAxisAlignment.center,),
-                                  ],
-                                ),
-                                Column(
-                                  children: [InkWell(
-                                      onTap: () =>
-                                          videoController.dislikeVideo(data.id),
-                                      child: Image.asset("assets/img/ThumbDown.png"),
-                                    ),
-                                   
-                                    ],
-                                ),
-                                SizedBox( height:1),
-                                Column(
-                                  children: [
-                                    InkWell(
+                                    SizedBox(height: 10),
+                                     InkWell(
+                                    onTap: () =>
+                                        videoController.dislikeVideo(data.id),
+                                    child: Image.asset("assets/img/ThumbDown.png"),
+                                  ), 
+                                  SizedBox(height: 20),
+                                   InkWell(
                                       onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => CommentScreen(
@@ -230,20 +225,20 @@ class _VideoScreenState extends State<VideoScreen> {
                                       ),
                                       child: Image.asset("assets/img/Exclamation.png"),
                                     ),
-                                    const SizedBox(height: 7),
-                                   
                                   ],
                                 ),
+                              
                                 Column(
                                   children: [
-                                    
+                                    Visibility(child: SizedBox(height: 10,)),
                                    Visibility(child: GestureDetector(child: Image.asset("assets/img/Share.png")),visible: isVisible ),
-                                   SizedBox(height:7,),
+                                   SizedBox(height:10,),
                                    Visibility(child: GestureDetector(child: Image.asset('assets/img/save.png')),visible: isVisible),
-                                   SizedBox(height:7,),
+                                   SizedBox(height:10,),
                                    Visibility(child: GestureDetector(child: Image.asset("assets/img/flower.png")),visible: isVisible),
-                                   SizedBox(height:7,),
-                                   
+                                   SizedBox(height:10,),
+                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/repost.png")),visible: isVisible),
+                                   SizedBox(height:10,),
                                    GestureDetector(child: Image.asset("assets/img/menu.png") ,
                                    onTap: () { setState(() {
                                      isVisible = !isVisible;

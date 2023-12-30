@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_tutorial/constants.dart';
@@ -7,31 +8,74 @@ import 'package:tiktok_tutorial/controllers/comment_controller.dart';
 import 'package:tiktok_tutorial/models/comment.dart';
 import 'package:timeago/timeago.dart' as tago;
 
-class CommentScreen extends StatelessWidget {
+class CommentScreen extends StatefulWidget {
   final String id;
   CommentScreen({
     Key? key,
     required this.id,
   }) : super(key: key);
 
+  @override
+  State<CommentScreen> createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
   final TextEditingController _commentController = TextEditingController();
+
   CommentController commentController = Get.put(CommentController());
+
   Widget buildCommentContainer(Comment value)
   {
     return Container(width: double.infinity,
-    child: Row(children: [//Image.network(value.profilePhoto),
+    child: Row(children: [Image.network(value.profilePhoto,width: 20 ,height: 20,),
      RichText(text: TextSpan(children: [
       TextSpan(text: value.username , style: TextStyle(fontWeight: FontWeight.bold)),TextSpan(text: value.comment)
     ]),)
     ],),);
   }
   @override
+  void didUpdateWidget(covariant CommentScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print('widget id :'+widget.id);
+
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print('widget id 2 :'+widget.id);
+    updateComment();
+  }
+List<Comment> commentsList = [];
+void updateComment () async
+{
+  setState(() {
+    commentsList= [];
+  }); 
+  print('widget id '+widget.id);
+  List<Comment> retValue = [];
+   (await firestore 
+          .collection('videos')
+          .doc(widget.id)
+          .collection('comments')
+          .get()).docs.map(((e) { retValue.add(Comment.fromSnap(e)) ; print('object 1' + e.toString() );}));
+            print('lenth'+retValue.length.toString());
+         setState(() {
+           commentsList = List.from(retValue);
+         });
+        
+          
+}
+
+  @override
   Widget build(BuildContext context) {
     //final size = MediaQuery.of(context).size;
-    commentController.updatePostId(id);
-    if(commentController.comments.isEmpty) return Container();
+    print(widget.id);
     
-    return buildCommentContainer(commentController.comments.first);
+    if(commentsList.isEmpty) return Container();
+    
+    return buildCommentContainer(commentsList.first);
     return SizedBox(
       width: double.infinity,
       height: 600,
