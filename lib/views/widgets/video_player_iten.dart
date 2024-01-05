@@ -3,9 +3,10 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerItem extends StatefulWidget {
   final String videoUrl;
+ 
   const VideoPlayerItem({
     Key? key,
-    required this.videoUrl,
+    required this.videoUrl, 
   }) : super(key: key);
 
   @override
@@ -22,6 +23,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
       ..initialize().then((value) {
         videoPlayerController.play();
         videoPlayerController.setVolume(1);
+        videoPlayerController.setLooping(true);
+        
       });
   }
 
@@ -34,7 +37,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    videoPlayerController.setLooping(true);
     return Container(
       width: size.width,
       height: size.height,

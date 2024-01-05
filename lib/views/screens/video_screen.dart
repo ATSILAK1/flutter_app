@@ -25,7 +25,8 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   
   final VideoController videoController = Get.put(VideoController());
-  bool isVisible = false ;
+  
+  int isVisible = 2 ;
 
 
 
@@ -90,7 +91,7 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+   
     
     
 
@@ -106,28 +107,37 @@ class _VideoScreenState extends State<VideoScreen> {
             return Stack(
               children: [
                 
-                VideoPlayerItem(
-                  videoUrl: data.videoUrl,
+                // VideoPlayerItem(
+                //   videoUrl: data.videoUrl,
+                  
 
+                // ),
+                Container(
+                  decoration: BoxDecoration(color: Colors.red),
                 ),
-                Align(child: CommentScreen(id: data.id,),alignment:Alignment.bottomCenter , )
-                ,
-                const Positioned(child: Text("for you ",style: TextStyle(color: Colors.blue , fontSize: 30)) ,),
+                
+                const Positioned(
+                  top: 20,
+                  left: 100,
+                  child: Text("for you ",style: TextStyle(color: Colors.white , fontSize: 20)) ,),
+                Positioned(
+                  top: 20,
+                  left: 180,
+                  child: Text("Followers", style: TextStyle(color: Colors.white , fontSize: 20),)),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                              ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              
+                            ),
+                            child: Visibility(
+                              visible: isVisible != 2 ,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,28 +145,17 @@ class _VideoScreenState extends State<VideoScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   // ignore: prefer_const_constructors
-                                  Row(children: [
-                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                  Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                  Icon(Icons.star_rate_sharp , color: Colors.amber)],)
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(children: [
+                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
+                                    Icon(Icons.star_rate_sharp , color: Colors.amber)],),
+                                  )
                                   ,
-                                  Text(
-                                    data.username,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    data.caption,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  
                                   // Row(
                                   //   children: [
                                   //     const Icon(
@@ -178,18 +177,21 @@ class _VideoScreenState extends State<VideoScreen> {
                               ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Container(
+                          
+                          width: 100,
+                          margin: EdgeInsets.only(top: 0,bottom: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             
-                            width: 100,
-                            margin: EdgeInsets.only(top: 0,bottom: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              
-                              children: [
-                              /*  buildProfile(
-                                  data.profilePhoto,
-                                ), */
-                               Column(
+                            children: [
+                            /*  buildProfile(
+                                data.profilePhoto,
+                              ), */
+                             Visibility(
+                                visible: isVisible != 2 ,
+                               child: Column(
                                   children: [
                                 
                                   GestureDetector(
@@ -203,7 +205,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                      if(data.dislike.length + data.likes.length != 0)
                                      Row(children: [
                                       Container(height: 10,width : (data.likes.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(0, 255, 117, 1)),
-                          
+                                                         
                                       Container(height: 10,width: (data.dislike.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(241, 16, 16, 1))
                                     ],
                                     mainAxisAlignment: MainAxisAlignment.center,),
@@ -215,33 +217,39 @@ class _VideoScreenState extends State<VideoScreen> {
                                   ), 
                                   SizedBox(height: 20),
                                    InkWell(
-                                      onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => CommentScreen(
-                                            id: data.id,
-                                            
-                                          ),
-                                        ),
-                                      ),
+                                      
+                                      
                                       child: Image.asset("assets/img/Exclamation.png"),
                                     ),
                                   ],
                                 ),
-                              
-                                Column(
+                             ),
+                            
+                              Visibility(
+                                visible: isVisible != 2,
+                                child: Column(
                                   children: [
-                                    Visibility(child: SizedBox(height: 10,)),
-                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/Share.png")),visible: isVisible ),
-                                   SizedBox(height:10,),
-                                   Visibility(child: GestureDetector(child: Image.asset('assets/img/save.png')),visible: isVisible),
-                                   SizedBox(height:10,),
-                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/flower.png")),visible: isVisible),
-                                   SizedBox(height:10,),
-                                   Visibility(child: GestureDetector(child: Image.asset("assets/img/repost.png")),visible: isVisible),
+                                   Visibility(
+                                    visible: isVisible == 1 ,
+                                     child: Column(children: [
+                                       SizedBox(height: 10,),
+                                     GestureDetector(child: Image.asset("assets/img/Share.png")),
+                                     SizedBox(height:10,),
+                                     GestureDetector(child: Image.asset('assets/img/save.png')),
+                                     SizedBox(height:10,),
+                                     GestureDetector(child: Image.asset("assets/img/flower.png")),
+                                     SizedBox(height:10,),
+                                     GestureDetector(child: Image.asset("assets/img/repost.png")),
+                                     
+                                     ],),
+                                   ),
                                    SizedBox(height:10,),
                                    GestureDetector(child: Image.asset("assets/img/menu.png") ,
                                    onTap: () { setState(() {
-                                     isVisible = !isVisible;
+                                      if (isVisible != 1)
+                                          isVisible = 1;
+                                      else 
+                                        isVisible = 0 ;
                                    });  }
                                                                      
                                     
@@ -249,14 +257,24 @@ class _VideoScreenState extends State<VideoScreen> {
                                    
                                   ],
                                 ),
-                               
-                              ],
-                            ),
+                              ),
+                             
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    
+                    Visibility(
+                      maintainState: true,
+                      child: CommentScreen(id: data.id ,isOpen: isVisible == 2 , onExpandClick: () => {
+                        setState(() {
+                          if (isVisible == 2)
+                              isVisible = 0;
+                          else 
+                          isVisible = 2 ;
+                        }) 
+                      },) ,visible: isVisible != 1 ? true : false),
+                                 
                   ],
                 ),
               ],

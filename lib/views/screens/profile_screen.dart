@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Container( decoration: BoxDecoration(color: Color.fromRGBO( 57, 219, 255,1)),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(9.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
@@ -196,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                          Padding(
                            padding: const EdgeInsets.all(8.0),
                            child: Container(child: Align(alignment: Alignment.centerLeft,
-                                      child: Text('Bio'))),
+                                      child: Text('Bio',maxLines: 1,))),
                          ),
                           Container(
                             decoration: BoxDecoration(color:Color.fromRGBO(40, 40, 40, 0.79)),
@@ -233,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children:[
                                   CachedNetworkImage(
                                   imageUrl: thumbnail,
-                                  fit: BoxFit.cover, 
+                                  fit: BoxFit.fill, 
                                 ),
                                   Positioned(
                                     child: 

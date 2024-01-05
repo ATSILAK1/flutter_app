@@ -16,14 +16,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar:
+      
+       BottomNavigationBar(
         onTap: (idx) {
           setState(() {
             pageIdx = idx;
           });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: backgroundColor,
+        backgroundColor: Color.fromRGBO(22,22,22,1),
         selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.white,
         currentIndex: pageIdx,
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items:  [
           
           BottomNavigationBarItem(
-            
+                
             icon:  Image.asset("assets/img/Home1.png" ,scale: pageIdx == 0 ? buttonScales:1,),
             label: '',
 

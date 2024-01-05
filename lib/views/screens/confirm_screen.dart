@@ -35,7 +35,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     controller.initialize();
     controller.play();
     controller.setVolume(1);
-    controller.setLooping(true);
+    
   }
 
   @override
@@ -47,15 +47,18 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF161616),
+     
       body: SingleChildScrollView(
+        
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width - 100,
+              height: MediaQuery.of(context).size.height / 1.5 ,
               child: VideoPlayer(controller),
             ),
             const SizedBox(
@@ -63,19 +66,34 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const SizedBox(
                     height: 10,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: TextInputField(
+                    decoration: BoxDecoration(color: Color.fromRGBO(0, 0, 0, 1)),
+                    margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                    width: MediaQuery.of(context).size.width - 150,
+                    child: TextField(
+                      
                       controller: _captionController,
-                      labelText: 'Caption',
-                      icon: Icons.closed_caption,
+                      maxLength: 200,
+                      maxLines: 5,
+                      
+                      decoration:  
+                      InputDecoration(hintText: "Description...",
+                      fillColor: Color.fromRGBO(0,0, 0, 1),
+                      filled: true,
+                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10)
+                      ,border: InputBorder.none
+                      
+                       
+                      
+                    
+                      
+                    )
                     ),
                   ),
                   const SizedBox(
