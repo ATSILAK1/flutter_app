@@ -1,5 +1,7 @@
 // ignore_for_file: sort_child_properties_last, avoid_unnecessary_containers, curly_braces_in_flow_control_structures
 
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -34,95 +36,105 @@ class _CommentScreenState extends State<CommentScreen> {
 
   Widget buildCommentContainer(Comment value, Color colors) {
     return 
-    Container(
-      width: double.infinity,
-      child: Row(
-        children: [SizedBox(width: 5,),
-          Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black, // Shadow color
-                    offset: Offset(10, 5), // Offset of the shadow
-                    blurRadius: 0, // Blur radius of the shadow
+    ClipRRect(
+      child: BackdropFilter(
+        filter:  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          width: double.infinity,
+          child: Row(
+            children: [SizedBox(width: 5,),
+              Container(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black, // Shadow color
+                        offset: Offset(10, 5), // Offset of the shadow
+                        blurRadius: 0, // Blur radius of the shadow
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: value.profilePhoto,
-                height: 60,
-                width: 60,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: value.profilePhoto,
+                    height: 60,
+                    width: 60,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.error,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(width: 10),
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: value.username,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'Anek Tamil')),
+                  TextSpan(text: " " + value.comment)
+                ]),
+              )
+            ],
           ),
-          SizedBox(width: 10),
-          RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                  text: value.username,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      fontFamily: 'Anek Tamil')),
-              TextSpan(text: " " + value.comment)
-            ]),
-          )
-        ],
+          decoration: BoxDecoration(color: colors),
+        ),
       ),
-      decoration: BoxDecoration(color: colors),
     );
   }
 
   Widget buildCaptionContainer(Video value, Color colors) {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        children: [SizedBox(width: 5,),
-          Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black, // Shadow color
-                    offset: Offset(10, 5), // Offset of the shadow
-                    blurRadius: 0, // Blur radius of the shadow
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          width: double.infinity,
+          child: Row(
+            children: [SizedBox(width: 5,),
+              Container(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black, // Shadow color
+                        offset: Offset(10, 5), // Offset of the shadow
+                        blurRadius: 0, // Blur radius of the shadow
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: value.profilePhoto,
-                height: 60,
-                width: 60,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: value.profilePhoto,
+                    height: 60,
+                    width: 60,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.error,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(
+                width: 20,
+              ),
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: value.username,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  TextSpan(text: " " + value.caption)
+                ]),
+              )
+            ],
           ),
-          SizedBox(
-            width: 20,
-          ),
-          RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                  text: value.username,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              TextSpan(text: " " + value.caption)
-            ]),
-          )
-        ],
+          decoration: BoxDecoration(color: colors),
+        ),
       ),
-      decoration: BoxDecoration(color: colors),
     );
   }
 
@@ -184,6 +196,9 @@ class _CommentScreenState extends State<CommentScreen> {
     List _video = _videoController.videoList;
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      
       children: [
         Align(
             child: Padding(
@@ -203,51 +218,57 @@ class _CommentScreenState extends State<CommentScreen> {
             : buildCaptionContainer(
                 _video.where((element) => element.id == widget.id).firstOrNull,
                 Colors.black.withOpacity(.8)),
-  
-        Container(
-          child: Visibility(
-            visible: widget.isOpen,
-            child: Stack(children: [
-              Container(
-                height: 350,
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.8)),
-                child: ListView.builder(
-                  itemCount: commentsList.length,
-                  itemBuilder: (context, index) => buildCommentContainer(
-                      commentsList[index], Colors.black.withOpacity(0)),
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                left: 45,
-                child: Container(
-                  width: 300,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 0),
-                      color: Color.fromRGBO(22, 22, 22, .5)),
-                  child: TextField(
-                    controller: _commentController,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
+      
+        ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
+              child: Visibility(
+                visible: widget.isOpen,
+                child: Stack(children: [
+                  Container(
+                    height: 350,
+                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.8)),
+                    child: ListView.builder(
+                      itemCount: commentsList.length,
+                      itemBuilder: (context, index) => buildCommentContainer(
+                          commentsList[index], Colors.black.withOpacity(0)),
                     ),
-                    decoration: const InputDecoration(
-                      hintText: "Write something ...",
-                      filled: true,
-                      fillColor: Color.fromRGBO(22, 22, 22, 0.3),
-                      labelStyle: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'AnekTamil',
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 45,
+                    child: Container(
+                      width: 300,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0),
+                          color: Color.fromRGBO(22, 22, 22, .5)),
+                      child: TextField(
+                        controller: _commentController,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Write something ...",
+                          filled: true,
+                          fillColor: Color.fromRGBO(22, 22, 22, 0.3),
+                          labelStyle: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'AnekTamil',
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ]),
               ),
-            ]),
+            ),
           ),
         ),
-
+    
         //  Visibility(
         //   visible:widget.isOpen ,
         //    child: TextButton(

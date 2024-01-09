@@ -32,7 +32,7 @@ class SearchScreen extends StatelessWidget {
             ),
             onFieldSubmitted: (value) => searchController.searchUser(value),
           ),
-          actions: [TextButton(onPressed: null, child: Text('Search',style: TextStyle(color:Color.fromRGBO(57, 219, 255, 1)),))],
+          actions: [TextButton(onPressed: null, child: Text('Search',style: TextStyle(color:Color.fromRGBO(57, 219, 255, 1),fontSize: 20),))],
         ),
         body: 
         

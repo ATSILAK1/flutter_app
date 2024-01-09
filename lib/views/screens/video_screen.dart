@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, sort_child_properties_last
 
-
-
 import 'package:flutter/material.dart';
 //import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/controllers/video_controller.dart';
@@ -15,20 +13,15 @@ import 'package:get/get.dart';
 
 class VideoScreen extends StatefulWidget {
   VideoScreen({Key? key}) : super(key: key);
-  
+
   @override
-  State<StatefulWidget> createState() =>_VideoScreenState();
-    
+  State<StatefulWidget> createState() => _VideoScreenState();
 }
 
-
 class _VideoScreenState extends State<VideoScreen> {
-  
   final VideoController videoController = Get.put(VideoController());
-  
-  int isVisible = 2 ;
-
-
+  bool flower = false;
+  int isVisible = 2;
 
   buildProfile(String profilePhoto) {
     return SizedBox(
@@ -91,12 +84,8 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-   
-    
-    
 
     return Scaffold(
-
       body: Obx(() {
         return PageView.builder(
           itemCount: videoController.videoList.length,
@@ -106,24 +95,34 @@ class _VideoScreenState extends State<VideoScreen> {
             final data = videoController.videoList[index];
             return Stack(
               children: [
-                
-                // VideoPlayerItem(
-                //   videoUrl: data.videoUrl,
-                  
-
-                // ),
-                Container(
-                  decoration: BoxDecoration(color: Colors.red),
-                ),
-                
+                 VideoPlayerItem(
+                    videoUrl: data.videoUrl,
+                     isCommentOpen: isVisible == 2,
+                  ),
+                //Container(width: size.width,
+                //          height: size.height,
+                //  child: Image.asset("assets/img/images.jpg"),),
+                Visibility( 
+                  visible: isVisible == 2 ,
+                  child: 
+                Positioned( 
+                  left: size.width / 2 - 30,
+                  top: 100,
+                  child:
+                 Image.asset("assets/img/pause.png"))),
                 const Positioned(
                   top: 20,
                   left: 100,
-                  child: Text("for you ",style: TextStyle(color: Colors.white , fontSize: 20)) ,),
+                  child: Text("for you ",
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                ),
                 Positioned(
-                  top: 20,
-                  left: 180,
-                  child: Text("Followers", style: TextStyle(color: Colors.white , fontSize: 20),)),
+                    top: 20,
+                    left: 180,
+                    child: Text(
+                      "Followers",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    )),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -133,11 +132,9 @@ class _VideoScreenState extends State<VideoScreen> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.only(
-                              
-                            ),
+                            padding: const EdgeInsets.only(),
                             child: Visibility(
-                              visible: isVisible != 2 ,
+                              visible: isVisible != 2,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,15 +144,22 @@ class _VideoScreenState extends State<VideoScreen> {
                                   // ignore: prefer_const_constructors
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Row(children: [
-                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                    Icon(Icons.star_rate_sharp , color: Colors.amber),
-                                    Icon(Icons.star_rate_sharp , color: Colors.amber)],),
-                                  )
-                                  ,
-                                  
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.star_rate_sharp,
+                                            color: Colors.amber),
+                                        Icon(Icons.star_rate_sharp,
+                                            color: Colors.amber),
+                                        Icon(Icons.star_rate_sharp,
+                                            color: Colors.amber),
+                                        Icon(Icons.star_rate_sharp,
+                                            color: Colors.amber),
+                                        Icon(Icons.star_rate_sharp,
+                                            color: Colors.amber)
+                                      ],
+                                    ),
+                                  ),
+
                                   // Row(
                                   //   children: [
                                   //     const Icon(
@@ -179,110 +183,179 @@ class _VideoScreenState extends State<VideoScreen> {
                           ),
                         ),
                         Container(
-                          
                           width: 100,
-                          margin: EdgeInsets.only(top: 0,bottom: 20),
+                          margin: EdgeInsets.only(top: 0, bottom: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            
                             children: [
-                            /*  buildProfile(
+                              /*  buildProfile(
                                 data.profilePhoto,
                               ), */
-                             Visibility(
-                                visible: isVisible != 2 ,
-                               child: Column(
-                                  children: [
-                                
-                                  GestureDetector(
-                                    child: Image.asset("assets/img/ThumbUp.png"),
-                                    onTap: () =>
-                                          videoController.likeVideo(data.id) ,
-                                  ),
-                                    const SizedBox(height: 10),
-                                    
-                                     // ignore: sort_child_properties_last
-                                     if(data.dislike.length + data.likes.length != 0)
-                                     Row(children: [
-                                      Container(height: 10,width : (data.likes.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(0, 255, 117, 1)),
-                                                         
-                                      Container(height: 10,width: (data.dislike.length / (data.dislike.length + data.likes.length))*45 , color: Color.fromRGBO(241, 16, 16, 1))
-                                    ],
-                                    mainAxisAlignment: MainAxisAlignment.center,),
-                                    SizedBox(height: 10),
-                                     InkWell(
-                                    onTap: () =>
-                                        videoController.dislikeVideo(data.id),
-                                    child: Image.asset("assets/img/ThumbDown.png"),
-                                  ), 
-                                  SizedBox(height: 20),
-                                   InkWell(
-                                      
-                                      
-                                      child: Image.asset("assets/img/Exclamation.png"),
-                                    ),
-                                  ],
-                                ),
-                             ),
-                            
                               Visibility(
                                 visible: isVisible != 2,
                                 child: Column(
                                   children: [
-                                   Visibility(
-                                    visible: isVisible == 1 ,
-                                     child: Column(children: [
-                                       SizedBox(height: 10,),
-                                     GestureDetector(child: Image.asset("assets/img/Share.png")),
-                                     SizedBox(height:10,),
-                                     GestureDetector(child: Image.asset('assets/img/save.png')),
-                                     SizedBox(height:10,),
-                                     GestureDetector(child: Image.asset("assets/img/flower.png")),
-                                     SizedBox(height:10,),
-                                     GestureDetector(child: Image.asset("assets/img/repost.png")),
-                                     
-                                     ],),
-                                   ),
-                                   SizedBox(height:10,),
-                                   GestureDetector(child: Image.asset("assets/img/menu.png") ,
-                                   onTap: () { setState(() {
-                                      if (isVisible != 1)
-                                          isVisible = 1;
-                                      else 
-                                        isVisible = 0 ;
-                                   });  }
-                                                                     
-                                    
-                                   ,)
-                                   
+                                    GestureDetector(
+                                      child:
+                                          Image.asset("assets/img/ThumbUp.png"),
+                                      onTap: () =>
+                                          videoController.likeVideo(data.id),
+                                    ),
+                                    const SizedBox(height: 10),
+
+                                    // ignore: sort_child_properties_last
+                                    if (data.dislike.length +
+                                            data.likes.length !=
+                                        0)
+                                      Row(
+                                        children: [
+                                          Container(
+                                              height: 10,
+                                              width: (data.likes.length /
+                                                      (data.dislike.length +
+                                                          data.likes.length)) *
+                                                  45,
+                                              color: Color.fromRGBO(
+                                                  0, 255, 117, 1)),
+                                          Container(
+                                              height: 10,
+                                              width: (data.dislike.length /
+                                                      (data.dislike.length +
+                                                          data.likes.length)) *
+                                                  45,
+                                              color: Color.fromRGBO(
+                                                  241, 16, 16, 1))
+                                        ],
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                      ),
+                                    SizedBox(height: 10),
+                                    InkWell(
+                                      onTap: () =>
+                                          videoController.dislikeVideo(data.id),
+                                      child: Image.asset(
+                                          "assets/img/ThumbDown.png"),
+                                    ),
+                                    SizedBox(height: 20),
+                                    InkWell(
+                                      child: Image.asset(
+                                          "assets/img/Exclamation.png"),
+                                    ),
                                   ],
                                 ),
                               ),
-                             
+                              Visibility(
+                                visible: isVisible != 2,
+                                child: Column(
+                                  children: [
+                                    Visibility(
+                                      visible: isVisible == 1,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          GestureDetector(
+                                              child: Image.asset(
+                                                  "assets/img/Share.png")),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          GestureDetector(
+                                              child: Image.asset(
+                                                  'assets/img/save.png')),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Visibility(
+                                                  visible: true,
+                                                  child: Image.asset(
+                                                      "assets/img/sidearrow.png")),
+                                              Visibility(
+                                                visible:  true,
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        flower = !flower;
+                                                      });
+                                                    },
+                                                    child: Image.asset(
+                                                        "assets/img/flower.png")),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          GestureDetector(
+                                              child: Image.asset(
+                                                  "assets/img/repost.png")),
+
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    
+                                    GestureDetector(
+                                      child: Image.asset("assets/img/menu.png"),
+                                      onTap: () {
+                                        setState(() {
+                                          if (isVisible != 1)
+                                            isVisible = 1;
+                                          else
+                                            isVisible = 0;
+                                            
+                                            print(isVisible);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
                     Visibility(
-                      maintainState: true,
-                      child: CommentScreen(id: data.id ,isOpen: isVisible == 2 , onExpandClick: () => {
-                        setState(() {
-                          if (isVisible == 2)
-                              isVisible = 0;
-                          else 
-                          isVisible = 2 ;
-                        }) 
-                      },) ,visible: isVisible != 1 ? true : false),
-                                 
+                        maintainState: true,
+                        child: CommentScreen(
+                          id: data.id,
+                          isOpen: isVisible == 2,
+                          onExpandClick: () => {
+                            setState(() {
+                              if (isVisible == 2)
+                                isVisible = 0;
+                              else
+                                isVisible = 2;
+
+                                print(isVisible);
+                            })
+                          },
+                        ),
+                        visible: isVisible != 1 ? true : false),
                   ],
                 ),
-              ],
-              
+              Positioned(bottom: 134,
+                left: 20,
+                  child: Visibility( visible: flower == true,
+                    child: GestureDetector(onTap: () {setState(() {
+                      if (isVisible ==1 )
+                      flower = !flower ;
+                      if (isVisible == 0)
+                       flower =  !flower;
+                    });
+                      
+                    },
+                      child: Image.asset("assets/img/textbar.png"))),
+                ),],
             );
-           
           },
-          
         );
       }),
     );

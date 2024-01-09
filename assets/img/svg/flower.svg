@@ -1,37 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:tiktok_tutorial/controllers/auth_controller.dart';
-import 'package:tiktok_tutorial/views/screens/add_video_screen.dart';
-import 'package:tiktok_tutorial/views/screens/profile_screen.dart';
-import 'package:tiktok_tutorial/views/screens/search_screen.dart';
-import 'package:tiktok_tutorial/views/screens/video_screen.dart';
-import 'package:tiktok_tutorial/views/screens/warning_screen.dart';
-
-List pages = [
-  VideoScreen(),
-  SearchScreen(),
-  const WarningScreen(),
-  Text('Messages Screen'),
-  ProfileScreen(uid: authController.user.uid),
-];
-
-// COLORS
-const backgroundColor = Color.fromARGB(255, 0, 0, 0);
-var buttonColor = Colors.red[400];
-const borderColor = Colors.grey;
-
-// FIREBASE
-var firebaseAuth = FirebaseAuth.instance;
-var firebaseStorage = FirebaseStorage.instance;
-var firestore = FirebaseFirestore.instance;
-
-// CONTROLLER
-var authController = AuthController.instance;
-
-
-String excla = '''
 <svg width="47" height="47" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="6.73682" y="6.73682" width="40.2632" height="40.2632" fill="black"/>
 <rect x="2" y="2" width="40.2632" height="40.2632" fill="#39DBFF" stroke="black" stroke-width="3" stroke-linejoin="round"/>
@@ -46,5 +12,3 @@ String excla = '''
 <path d="M18.9302 14.6977L12.2326 19.0479V10.3474L18.9302 14.6977Z" fill="black"/>
 <path d="M22.2791 8L26.6294 14.6977H17.9288L22.2791 8Z" fill="black"/>
 </svg>
-
-''';

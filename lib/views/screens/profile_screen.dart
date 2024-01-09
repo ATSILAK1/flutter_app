@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Column( children: [
                                   Row(children:[GestureDetector(child: Image.asset("assets/img/ThumbUp.png"), )],),
-                                  Row(children: [Text('1000' , style: TextStyle(color: Colors.black),)],)
+                                  Row(children: [Text(controller.user['likes'] , style: TextStyle(color: Colors.black),)],)
                                 ],                         
                                 )
                                
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                  Column(children: [
                                   Row(children:[GestureDetector(child: Image.asset("assets/img/ArrowUpDown.png"),)],),
-                                  Row(children: [Text('1000  |  1000' ,style: TextStyle(color: Colors.black))],)])
+                                  Row(children: [Text(controller.user['followers'] +"|"+ controller.user['following']  ,style: TextStyle(color: Colors.black))],)])
                               ],
                             ),
                           ),

@@ -50,4 +50,14 @@ class VideoController extends GetxController {
       });
     }
   }
+
+  repostVideo(String id) async
+{
+  var uid = authController.user.uid;
+await firestore.collection("videos").doc(id).update(
+  {
+    "uidRepost":FieldValue.arrayUnion([uid])
+  }
+);
+}
 }

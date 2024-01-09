@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/views/screens/confirm_screen.dart';
 import 'package:tiktok_tutorial/views/widgets/file_select.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class AddVideoScreen extends StatelessWidget {
@@ -79,12 +80,21 @@ class AddVideoScreen extends StatelessWidget {
       ),
     );
   }
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MediaPicker(title: "pick"),
+      body: Center(
+        child: GestureDetector(
+          onTap: () => showOptionsDialog(context),
+          child: Container(
+            width: 190,
+            height: 50,
+
+            child:  Center(
+              child: Image.asset("assets/img/Add.png")
+              ),
+            ),
+          ),
+        ),
       );
-    
-  }
-}
+}}
